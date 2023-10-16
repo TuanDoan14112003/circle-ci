@@ -12,6 +12,14 @@ jobs:
       - run:
           name: Build Docker Image
           command: |
-            cd frontend && docker build -t docker_app:latest .
+            cd frontend && docker build -t new-frontend-final --platform linux/amd64 .
+      - run:
+          name: Login
+          command: |
+            docker login --username $DOCKER_USERNAME --password $DOCKER_PASSWORD
+      - run:
+          name: Push
+          command: |
+            docker tag new-frontend-final tuandoan1411/test-deploy:latest && docker push tuandoan1411/test-deploy:latest  
             
             
