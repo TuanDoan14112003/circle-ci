@@ -16,19 +16,7 @@ jobs:
       - run:
           name: Start App
           command: |
-            cd frontend && npm start &
-      - run:
-          name: Install Mocha global
-          command: cd test && npm install --prefix=$HOME/.local --global mocha
-      - run:
-          name: Install Test Dependencies
-          command: cd test && npm i
-      - run:
-          name: Wait for App to Start
-          command: sleep 120
-      - run:
-          name: Run Tests
-          command: cd test && mocha --timeout 10000
+            cd frontend && npm test
   build-docker:
     docker:
       - image: cimg/node:18.18.1
