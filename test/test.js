@@ -24,7 +24,7 @@ describe('Integration Test', function () {
 
         // You can also perform interactions with your app
 
-        // Add more assertions or interactions as needed
+        // Add more assertions or interactions as need
     });
     done();
     // Add more test cases as neededs
