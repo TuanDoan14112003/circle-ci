@@ -1,11 +1,18 @@
 version: 2.1
-
 jobs:
-  build:
+  test_frontend:
     docker:
-      - image: cimg/base:2022.06
+      - image: circleci/node:14
+
+    working_directory: ~/repo
+
     steps:
-      # ... steps for building/testing app ...
-      - setup_remote_docker:
-          version: 20.10.14
-      - run: pwd && ls
+      - checkout
+
+      # Install dependencies and run tests (you can add your own tests)
+      - run:
+          name: Install Frontend Dependencies
+          command: cd frontend && npm install
+      - run:
+          name: Build Frontend
+          command: cd frontend && npm run build
