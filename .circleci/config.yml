@@ -61,7 +61,7 @@ jobs:
             docker tag new-frontend-final tuandoan1411/test-deploy:latest && docker push tuandoan1411/test-deploy:latest  
             
 
-  install-aws:
+  deploy:
     docker:
       - image: circleci/python:3.8
     steps:
@@ -94,7 +94,7 @@ workflows:
           filters:
             branches:
               only: main
-      - install-aws:
+      - deploy:
           requires:
             - build-docker
           filters:
