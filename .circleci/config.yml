@@ -31,9 +31,13 @@ jobs:
           command: |
             cd backend && npm install
       - run:
+          name: Install Mocha Globally
+          command: |
+            npm install --prefix=$HOME/.local --global mocha
+      - run:
           name: Start App
           command: |
-            cd backend && npm test --passWithNoTests
+            cd backend && mocha --exit
   build-docker:
     docker:
       - image: cimg/node:18.18.1
