@@ -1,5 +1,27 @@
 version: 2.1
 jobs:
+  test-app:
+    docker:
+      - image: cimg/node:18.18.1
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+        name: Build Docker Image
+          command: |
+            cd frontend && docker build -t new-frontend-final --platform linux/amd64 .
+      - run:
+        name: Install Mocha global
+          command: |
+            cd test && npm i -g mocha
+      - run:
+        name: Install Test Dependencies
+          command: |
+            cd test && npm i
+      - run:
+        name: Run Tests
+          command: |
+            cd test && mocha --timeout 10000
   build-docker:
     docker:
       - image: cimg/node:18.18.1
@@ -47,7 +69,10 @@ workflows:
   version: 2
   test-deploy:
     jobs:
+      - test-app
       - build-docker:
+          requires:
+            - test-app
           filters:
             branches:
               only: main
