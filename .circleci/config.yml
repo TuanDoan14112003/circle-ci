@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Run Docker Container
           command: |
-            docker run -d -p 3000:3000 new-frontend-final
+            docker run -p 3000:3000 new-frontend-final
       # - run:
       #     name: Install Mocha global
       #     command: cd test && npm install --prefix=$HOME/.local --global mocha
