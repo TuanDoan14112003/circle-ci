@@ -26,6 +26,5 @@ describe('Integration Test', function () {
 
         // Add more assertions or interactions as need
     });
-    done();
     // Add more test cases as neededs
 });
