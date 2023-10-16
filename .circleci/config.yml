@@ -8,20 +8,16 @@ jobs:
       - checkout
       - run:
         name: Build Docker Image
-          command: |
-            cd frontend && docker build -t new-frontend-final --platform linux/amd64 .
+          command: cd frontend && docker build -t new-frontend-final --platform linux/amd64 .
       - run:
         name: Install Mocha global
-          command: |
-            cd test && npm i -g mocha
+          command: cd test && npm i -g mocha
       - run:
         name: Install Test Dependencies
-          command: |
-            cd test && npm i
+          command: cd test && npm i
       - run:
         name: Run Tests
-          command: |
-            cd test && mocha --timeout 10000
+          command: cd test && mocha --timeout 10000
   build-docker:
     docker:
       - image: cimg/node:18.18.1
