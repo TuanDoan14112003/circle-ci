@@ -34,7 +34,7 @@ jobs:
           command: |
             cd backend && npm install
       - run:
-          name: Start App
+          name: Test app 
           command: |
             cd backend && mocha
   build-docker:
