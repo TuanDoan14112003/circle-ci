@@ -24,6 +24,9 @@ jobs:
           name: Install Test Dependencies
           command: cd test && npm i
       - run:
+          name: Wait for App to Start
+          command: sleep 120
+      - run:
           name: Run Tests
           command: cd test && mocha --timeout 10000
   build-docker:
