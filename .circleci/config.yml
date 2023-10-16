@@ -51,4 +51,7 @@ workflows:
       - install-aws:
           requires:
             - build-docker
+          filters:
+            branches:
+              only: main
 
