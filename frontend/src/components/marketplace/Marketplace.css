@@ -2,7 +2,7 @@
 File name: Marketplace.css
 Author: Anh Tuan Doan
 Student ID: 103526745
-Last date modified: 15/10/2023
+Last date modified: 02/09/2023
  */
 
 /* Styling for the main body of the marketplace */
@@ -14,15 +14,6 @@ Last date modified: 15/10/2023
 .marketplace h1 {
     color: white;
     text-align: center;
-}
-
-.center-screen {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;  /* Full height of the viewport */
-    margin: 0;      /* Removing default body margin */
-    color: white;
 }
 
 /* Styling for the filter icon */

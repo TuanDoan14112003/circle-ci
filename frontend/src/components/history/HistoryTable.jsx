@@ -2,12 +2,37 @@
 filename: HistoryTable.jsx
 Author: Anh Tuan Doan
 StudentId: 103526745
-last date modified: 15/10/2023
+last date modified: 03/09/2023
 */
 
-import "./HistoryTable.css";
-import { useState } from "react";
-function HistoryTable({transactions}) {
+import "./HistoryTable.css"
+function HistoryTable() {
+    const transactionHistory = [ // Sample transaction history data
+        {
+            id: 1,
+            date: "02/09/2023",
+            title: "Product 1",
+            seller: "Tuan Doan",
+            price: 200,
+            status: "valid",
+        },
+        {
+            id: 2,
+            date: "01/09/2023",
+            title: "Product 2",
+            seller: "Tuan Doan",
+            price: 100,
+            status: "pending",
+        },
+        {
+            id: 3,
+            date: "03/09/2023",
+            title: "Product 3",
+            seller: "Tuan Doan",
+            price: 150,
+            status: "invalid",
+        }
+    ]
     return (
         // Main container for the transaction history table
         <div className="table-container">
@@ -16,11 +41,9 @@ function HistoryTable({transactions}) {
                 <thead>
                     <tr>
                         <th>Seller</th>
-                        <th>Buyer</th>
                         <th>Date</th>
                         <th>Product</th>
                         <th>Price</th>
-                        <th>Transaction Hash</th>
                         <th>Status</th>
                     </tr>
                 </thead>
@@ -28,25 +51,16 @@ function HistoryTable({transactions}) {
                 <tbody>
                     {
                         // Mapping over the transactionHistory array to render each transaction row
-                        transactions.map((transaction) => {
+                        transactionHistory.map((transaction) => {
                             return (
                                 <tr>
-                                    <td data-label="Seller">{transaction.seller_name}</td>
-                                    <td data-label="Buyer">{transaction.buyer_name}</td>
-                                    <td data-label="Date">{transaction.purchase_date}</td>
-                                    <td data-label="Product">{transaction.asset_name}</td>
-                                    <td data-label="Price">{transaction.asset_price} ETH</td>
-                                    <td data-label="Transaction Hash">
-                                        <input
-                                            type="text"
-                                            readOnly //only allow user to read and copy
-                                            value={transaction.transaction_hash} 
-                                            className='hash-input'
-                                        />
-                                    </td>
+                                    <td data-label="Seller">{transaction.seller}</td>
+                                    <td data-label="Date">{transaction.date}</td>
+                                    <td data-label="Product">{transaction.title}</td>
+                                    <td data-label="Price">{transaction.price} ETH</td>
                                     <td data-label="Status">
-                                        <p className={"status status-valid"}>
-                                            Valid
+                                        <p className={"status status-" + transaction.status}>
+                                            {transaction.status.toUpperCase()}
                                         </p>
                                     </td>
                                 </tr>

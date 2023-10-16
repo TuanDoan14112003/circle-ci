@@ -2,14 +2,13 @@
 filename: LoginSection.jsx
 Author: Gia Hung Tran
 StudentId: 103509199
-last date modified: 15/10/2023
+last date modified: 03/09/2023
 */
 // Required Libraries and Modules
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./LoginSection.css";
-import { useNavigate } from "react-router-dom";
-import {CookiesProvide, useCookies} from "react-cookie";
-import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
+
 /**
  * LoginSection Component
  * 
@@ -17,7 +16,7 @@ import axios from 'axios';
  * It contains input fields for the username and password, a "Remember me" checkbox, 
  * and a button to submit the login form.
  */
-const LoginSection = ({authStatus, setAuthStatus}) => {
+const LoginSection = () => {
     // Hooks
     const navigate = useNavigate(); // Hook from react-router for programmatic navigation
     const [formData, setFormData] = useState({
@@ -25,9 +24,6 @@ const LoginSection = ({authStatus, setAuthStatus}) => {
         password: "",
         rememberMe: false,
     });
-    const [errMsg, setErrMsg] = useState("");
-    const [cookies, setCookie] = useCookies(["user"]);
-
 
     /**
      * Handle input changes and update the formData state.
@@ -46,54 +42,26 @@ const LoginSection = ({authStatus, setAuthStatus}) => {
         setFormData(prevState => ({ ...prevState, rememberMe: !prevState.rememberMe }));
     };
 
-    const saveJWTinCookie = (token)=>{
-        const currentDate = new Date();
-        const expiryDate = new Date(currentDate);
-        expiryDate.setDate(currentDate.getDate() + 2);
-        setCookie('jwt_token', token, {
-            expires: expiryDate,
-            path: '/',
-        })
-    }
-
     /**
      * Handle the form submission.
      * For the purpose of this example, it redirects the user to the marketplace.
      */
-    const handleSubmit = (evt) => {
-        evt.preventDefault();
-        axios.post("http://localhost:8000/api/auth/login/",{ //api to login
-            "email": evt.target.email.value.trim(), 
-            "password": evt.target.password.value,
-        }).then(res => {
-            saveJWTinCookie(res.data.data.access_token); //save token into cookie
-            setAuthStatus(true); 
-            console.log(authStatus);
-            navigate("/marketplace"); //navigate to marketplace
-        }).catch(err => {
-            if(err.response ? true: false) //axios error
-            {
-                setErrMsg(err.response.data.message)
-            }
-            else{ //other error
-                setErrMsg(err.message)
-            }
-        });
-
+    const handleSubmit = () => {
+        navigate("/marketplace");
     };
 
     return (
-        <form method="POST" onSubmit={handleSubmit} className="form-container" id="login-form">
+        <div className="form-container" id="login-form">
             <h2>Account Login</h2>
             {/* Username Input */}
-            <label className="label-form" htmlFor="email">Email</label>
+            <label className="label-form" htmlFor="username">Username</label>
             <input className="ipt-form"
                 type="text"
-                placeholder="email@xyz.com"
-                value={formData.email}
+                placeholder="Username"
+                value={formData.username}
                 onChange={handleChange}
-                name="email"
-                id="email"
+                name="username"
+                id="username"
             />
             {/* Password Input */}
             <label className="label-form" htmlFor="password">Password</label>
@@ -105,10 +73,23 @@ const LoginSection = ({authStatus, setAuthStatus}) => {
                 id="password"
                 name="password"
             />
-            {errMsg !== "" && <p className="error-notice">{errMsg}</p>}
+            {/* Remember Me Checkbox and Forgot Password Link */}
+            <div className="wrapper-option">
+                <div className="remember">
+                    <input 
+                        type="checkbox" 
+                        id="rememberMe" 
+                        name="rememberMe"
+                        checked={formData.rememberMe} 
+                        onChange={handleCheckboxChange}
+                    />
+                    <label htmlFor="rememberMe">Remember me</label>
+                </div> 
+                <Link to="/login">Forgot Password?</Link>
+            </div>
             {/* Login Button */}
-            <button type ="submit" className="btn-submit" > Login</button>
-        </form>
+            <button className="btn-submit" onClick={handleSubmit}>Login to your account</button>
+        </div>
     );
 }
 

@@ -2,13 +2,13 @@
 filename: LoginSection.css
 Author: Gia Hung Tran
 StudentId: 103509199
-last date modified: 15/10/2023
+last date modified: 03/09/2023
 */
 /* Main container for the login form */
 .form-container {
     margin: 15px;
     width: 400px;
-    min-height: 270px;
+    height: 350px;
     padding: 20px;
     background: #1D2333;
     border-radius: 10px;
@@ -51,20 +51,6 @@ last date modified: 15/10/2023
     background-color: #0056b3;
 }
 
-.error-notice{
-    text-align: center;
-    color: #FF6969;
-    margin-bottom: 5px;
-}
-.success-notice{
-    text-align: center;
-    color: #9EDDFF;
-    margin-bottom: 5px;
-}
-.success-notice a{
-    color: #9EDDFF;
-    text-decoration: underline;
-}
 /* Container for the remember me checkbox and forgot password link */
 .wrapper-option {
     margin-bottom: 10px;
