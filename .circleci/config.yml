@@ -47,7 +47,10 @@ workflows:
   version: 2
   test-deploy:
     jobs:
-      - build-docker
+      - build-docker:
+          filters:
+            branches:
+              only: main
       - install-aws:
           requires:
             - build-docker
