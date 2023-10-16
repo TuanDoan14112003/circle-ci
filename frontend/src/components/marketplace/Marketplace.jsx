@@ -2,66 +2,68 @@
 File name: Marketplace.jsx
 Author: Anh Tuan Doan
 Student ID: 103526745
-Last date modified: 15/10/2023
+Last date modified: 02/09/2023
  */
 import "./Marketplace.css";
-import LoadingSpinner from "../common/LoadingSpinner";
+import FilterIcon from "../../assets/filter.svg";
 import ProductList from "./ProductList";
-import {useState, useEffect} from "react";
-import Error404 from "../../assets/error-404.png";
-import axios from 'axios';
-import { useLocation } from "react-router-dom";
-function Marketplace() {
-    const [data, setData] = useState([]); //data of assets fetched by the api
-    const [loading, setLoading] = useState(true); //loading state
-    const [error, setError] = useState(null); //error message
-    const location = useLocation(); //location to extract query from the api
-    useEffect(() => {
-        // The API endpoint
-        setLoading(true); //set loading state to true when first load
-        setError(null);
-        const apiUrl = 'http://localhost:8000/api/assets/';
-        let fullURL =""
-        if(location.search==""){ //if this is the normal marketplace without any sorting task
-            fullURL = `${apiUrl}?availability=true`; //just fetch assets available for trading
-        }
-        else{
-            fullURL = `${apiUrl}${location.search}&availability=true`; //extract the sort query
-        }
-        axios.get(fullURL)
-            .then(response => {
-                setData(response.data.data.digital_assets); //set data of found assets
-                setLoading(false);
-            })
-            .catch(err => {
-                setError(err);
-                setLoading(false);
-                console.log(err.response ? true : false);
-            });
-    }, [location.search]); //re-fecth the api whenever the query is changed
+import {useState} from "react";
+import Filter from "../common/Filter";
 
-    if(loading) //loading status
+const productList = [ // Sample product list data
     {
-        return  <div className="center-screen">
-                    <LoadingSpinner/>
-                    <h1>Loading ...</h1>
-                </div>;
-    }
-    if(error){ //error status
-        if(error.response ? true : false) //axios error
-        {
-            return <div className="center-screen">
-            <h1>{error.response.data.message}</h1>
-            </div>;    
-        }
-        else{ //other error
-            return <div className="center-screen">
-            <img src={Error404} alt="" />
-            <h1>{error.message}</h1>
-        </div>;
-    
-        }
-    }
+        id: 1,
+        title: "Product 1",
+        seller: "Tuan Doan",
+        price: 200
+    },
+    {
+        id: 2,
+        title: "Product 2",
+        seller: "Tuan Doan",
+        price: 200
+    },
+    {
+        id: 3,
+        title: "Product 3",
+        seller: "Tuan Doan",
+        price: 200
+    },
+    {
+        id: 4,
+        title: "Product 4",
+        seller: "Tuan Doan",
+        price: 200
+    },
+    {
+        id: 5,
+        title: "Product 5",
+        seller: "Tuan Doan",
+        price: 200
+    },
+    {
+        id: 6,
+        title: "Product 6",
+        seller: "Tuan Doan",
+        price: 200
+    },
+    {
+        id: 7,
+        title: "Product 7",
+        seller: "Tuan Doan",
+        price: 200
+    },
+    {
+        id: 8,
+        title: "Product 8",
+        seller: "Tuan Doan",
+        price: 200
+    },
+]
+function Marketplace() {
+    // State to manage the visibility of the filter
+    const [isFilterClicked, setFilterClicked] = useState(false);
+
     return (
         // Main container for the marketplace
         <div className="marketplace">
@@ -69,11 +71,14 @@ function Marketplace() {
                 <div className="container">
                     {/* Marketplace title */}
                     <h1>The Marketplace</h1>
+                    {/* Filter icon which, when clicked, opens the filter */}
+                    <img className="icon-filter" onClick={() => setFilterClicked(true)} src={FilterIcon} alt="Filter Icon" />
                 </div>
                 {/* Rendering the list of products */}
-                {loading && <p>Loading...</p>}
-                {!loading && <ProductList productList={data} />}
+                <ProductList productList={productList} />
             </div>
+            {/* Filter component */}
+            <Filter clicked={isFilterClicked} setFilter={setFilterClicked} />
         </div>
     );
 }

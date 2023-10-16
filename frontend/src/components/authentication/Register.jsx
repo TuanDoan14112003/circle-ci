@@ -2,12 +2,12 @@
 filename: Register.jsx
 Author: Gia Hung Tran
 StudentId: 103509199
-last date modified: 15/10/2023
+last date modified: 03/09/2023
 */
 // Importing necessary libraries and modules
 import React, { useState } from "react";
 import "./LoginSection.css";
-import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 /**
  * Register Component
@@ -18,17 +18,14 @@ import axios from 'axios';
  */
 const Register = () => {
     // Hook from react-router for programmatic navigation
+    const navigate = useNavigate();
 
     // State to manage form data
     const [formData, setFormData] = useState({
-        firstname: "",
-        lastname: "",
-        email: "",
+        username: "",
         password: "",
         confirmPassword: "",
     });
-    const [errMsg, setErrMsg] = useState("");    //error message
-    const [successMsg, setSuccessMsg] = useState(""); //success message
 
     /**
      * Handle input changes and update the formData state.
@@ -44,62 +41,22 @@ const Register = () => {
      * Handle the form submission.
      * For the purpose of this example, it redirects the user to the marketplace after registration.
      */
-    const handleSubmit = (evt) => {
-        evt.preventDefault();
-        setSuccessMsg(""); //reset success message
-       
-        if(evt.target.password.value == evt.target.confirmPassword.value) //check if the password match
-        {
-            setErrMsg("");
-            axios.post("http://localhost:8000/api/auth/register/",{ //api to register
-                "first_name": evt.target.firstname.value.trim(),
-                "last_name": evt.target.lastname.value.trim(),
-                "email": evt.target.email.value.trim(), 
-                "password": evt.target.password.value,
-            }).then(res => {
-                console.log(res)
-                setSuccessMsg("Register Successfully!") //set success message
-            }).catch(err => {
-                console.log(err);
-                setErrMsg(err.response.data.message); //set error message
-            });
-        }
-        else{
-            setErrMsg("Passwords do not match")
-        }
-
+    const handleSubmit = () => {
+        navigate("/marketplace");
     };
 
     return (
-        <form method="POST" onSubmit={handleSubmit} className="form-container" id="register-form">
+        <div className="form-container" id="login-form">
             <h2>Account Register</h2>
-            <label className="label-form" htmlFor="firstname">First Name</label>
-            <input className="ipt-form"
-                type="text"
-                placeholder="First Name"
-                value={formData.firstname}
-                onChange={handleChange}
-                name="firstname"
-                id="firstname"
-            />
-            <label className="label-form" htmlFor="lastname">Last Name</label>
-            <input className="ipt-form"
-                type="text"
-                placeholder="Last Name"
-                value={formData.lastname}
-                onChange={handleChange}
-                name="lastname"
-                id="lastname"
-            />
             {/* Username Input */}
-            <label className="label-form" htmlFor="email">Email</label>
+            <label className="label-form" htmlFor="username">Username</label>
             <input className="ipt-form"
                 type="text"
-                placeholder="email@xyz.com"
-                value={formData.email}
+                placeholder="Username"
+                value={formData.username}
                 onChange={handleChange}
-                name="email"
-                id="email"
+                name="username"
+                id="username"
             />
             {/* Password Input */}
             <label className="label-form" htmlFor="password">Password</label>
@@ -121,12 +78,9 @@ const Register = () => {
                 id="confirmPassword"
                 name="confirmPassword"
             />
-            {/* conditional rendering with success and error */}
-            {successMsg !== "" && <p className="success-notice">{successMsg} Please <a href="">login</a></p>}
-            {errMsg !== "" && <p className="error-notice">{errMsg}</p>}
             {/* Registration Button */}
-            <button type="submit" className="btn-submit" >Register Account</button>
-        </form>
+            <button className="btn-submit" onClick={handleSubmit}>Register Account</button>
+        </div>
     );
 }
 

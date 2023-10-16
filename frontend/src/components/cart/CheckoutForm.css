@@ -2,7 +2,7 @@
 File name: CheckoutForm.css
 Author: Dang Khanh Toan Nguyen
 StudentID: 103797499
-Last date modified: 15/10/2023
+Last date modified: 03/09/2023
 */
 
 /* Styling for the entire modal overlay */
@@ -18,7 +18,7 @@ Last date modified: 15/10/2023
     align-items: center;
 }
 /* Styling for the form container */
-.checkout {
+.checkout-form form {
     background-color: #4f4f62;
     width:40vw;
     min-width: 250px;
@@ -40,9 +40,4 @@ Last date modified: 15/10/2023
 /* Styling for form input elements */
 .checkout-form .form-input {
     margin-bottom: 20px;
-}
-.succes-notice{
-    margin: 5px;
-    text-align: center;
-    color: #B5CB99;
 }
