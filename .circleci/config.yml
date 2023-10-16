@@ -8,4 +8,4 @@ jobs:
       # ... steps for building/testing app ...
       - setup_remote_docker:
           version: 20.10.14
-      - run: sudo systemctl start docker && cd frontend && docker build -t new-frontend-final --platform linux/amd64 .
+      - run: cd frontend && docker build -t new-frontend-final --platform linux/amd64 .
