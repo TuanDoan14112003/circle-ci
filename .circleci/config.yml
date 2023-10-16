@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  build_application:
+  build:
     docker:
       - image: cimg/node:18.18.1
     working_directory: ~/repo
@@ -13,3 +13,5 @@ jobs:
           name: Build Docker Image
           command: |
             cd frontend && docker build -t docker_app:latest .
+            
+            
