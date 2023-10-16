@@ -15,7 +15,7 @@ jobs:
             cd frontend && docker build -t new-frontend-final --platform linux/amd64 .
       - run:
           name: Install Mocha global
-          command: cd test && npm i -g mocha
+          command: cd test && npm install --prefix=$HOME/.local --global mocha
       - run:
           name: Install Test Dependencies
           command: cd test && npm i
