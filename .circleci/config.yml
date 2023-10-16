@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  test-app:
+  test-frontend:
     docker:
       - image: cimg/node:18.18.1
     working_directory: ~/repo
@@ -17,6 +17,26 @@ jobs:
           name: Start App
           command: |
             cd frontend && npm test --passWithNoTests
+  test-backend:
+    docker:
+      - image: cimg/node:18.18.1
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 20.10.23
+          docker_layer_caching: true
+     - run:
+          name: Install Mocha global
+          command: npm install --prefix=$HOME/.local --global mocha
+      - run:
+          name: Install Dependencies
+          command: |
+            cd backend && npm install
+      - run:
+          name: Start App
+          command: |
+            cd backend && mocha
   build-docker:
     docker:
       - image: cimg/node:18.18.1
@@ -64,10 +84,12 @@ workflows:
   version: 2
   test-deploy:
     jobs:
-      - test-app
+      - test-frontend
+      - test-backend
       - build-docker:
           requires:
-            - test-app
+            - test-frontend
+            - test-backend
           filters:
             branches:
               only: main
