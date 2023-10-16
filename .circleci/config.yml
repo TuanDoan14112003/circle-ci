@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  build:
+  build-docker:
     docker:
       - image: cimg/node:18.18.1
     working_directory: ~/repo
@@ -22,4 +22,25 @@ jobs:
           command: |
             docker tag new-frontend-final tuandoan1411/test-deploy:latest && docker push tuandoan1411/test-deploy:latest  
             
-            
+
+  install-aws:
+    docker:
+      - image: circleci/python:3.8
+
+    steps:
+      - checkout
+      - run:
+          name: Install AWS CLI
+          command: |
+            pip install awscli
+      - run:
+          name: Configure AWS CLI
+          command: |
+            aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+            aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build-docker
+      - install-aws
